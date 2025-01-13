@@ -1,14 +1,14 @@
 import Contentstack, { LivePreviewQuery } from "contentstack";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import Personalize from "@contentstack/personalize-edge-sdk";
+import { addEditableTags } from "@contentstack/utils";
 
 export const Stack = Contentstack.Stack({
   api_key: process.env.NEXT_PUBLIC_CS_API_KEY || "",
-  delivery_token:
-    process.env.NEXT_PUBLIC_CS_DELIVERY_TOKEN || "",
+  delivery_token: process.env.NEXT_PUBLIC_CS_DELIVERY_TOKEN || "",
   environment: process.env.NEXT_PUBLIC_CS_ENVIRONMENT || "",
   live_preview: {
-    preview_token: process.env.NEXT_PUBLIC_PREVIEW_TOKEN || "",
+    preview_token: process.env.NEXT_PUBLIC_CS_LIVE_PREVIEW_TOKEN || "",
     enable: true,
     host: "rest-preview.contentstack.com",
   },
@@ -37,7 +37,7 @@ export const getEntryByUrl = async ({
 }) => {
   let entry;
   if (searchParams) {
-    Stack.livePreviewQuery(await searchParams);
+    Stack.livePreviewQuery(searchParams);
   }
   let req = Stack.ContentType(contentTypeUid).Query().where("url", url);
   if (variantParam) {
@@ -53,5 +53,6 @@ export const getEntryByUrl = async ({
     // fetch the entry without the variant aliases
     entry = await req.toJSON().find();
   }
+  if (searchParams) addEditableTags(entry, contentTypeUid, true, "en-us");
   return entry;
 };

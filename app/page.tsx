@@ -1,8 +1,7 @@
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getEntryByUrl } from "./sdk/contentstack";
 import Personalize from "@contentstack/personalize-edge-sdk";
 //import MyButton from "./button";
-import { GoogleTagManager } from "@next/third-parties/google";
 import ResetButton from "./ResetButton";
 
 const navigationLinks = [
@@ -31,7 +30,6 @@ async function fetchData(searchParams: any) {
 
 export default async function Page({ searchParams }: { searchParams: any }) {
   const data = await fetchData(searchParams);
-
   const announcementText = data?.announcement_text || "";
   const bannerText = data?.banner_text || "";
   const bannerDescription = data?.banner_description || "";
@@ -107,7 +105,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div
                 className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 
-                    ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                    ring-1 ring-gray-900/10 hover:ring-gray-900/20" {...data.$.announcement_text}
               >
                 {announcementText}
                 <a href="#" className="font-semibold text-indigo-600">
@@ -117,10 +115,10 @@ export default async function Page({ searchParams }: { searchParams: any }) {
               </div>
             </div>
             <div className="text-center">
-              <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
+              <h1 {...data.$.banner_text} className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
                 {bannerText}
               </h1>
-              <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+              <p {...data.$.banner_description} className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
                 {bannerDescription}
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">

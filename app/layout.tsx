@@ -27,13 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <LivePreviewInitComponent />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main>
-          <LivePreviewInitComponent />
-          {children}
-        </main>
+        <main>{children}</main>
         <GoogleTagManager gtmId="GTM-P74KNKBH" />
       </body>
     </html>

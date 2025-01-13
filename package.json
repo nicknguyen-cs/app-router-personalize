@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@contentstack/live-preview-utils": "^3.0.1",
+    "@contentstack/live-preview-utils": "^3.0.2",
     "@contentstack/personalize-edge-sdk": "^1.0.4",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
