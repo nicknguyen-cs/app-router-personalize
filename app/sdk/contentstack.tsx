@@ -39,7 +39,7 @@ export const getEntryByUrl = async ({
   if (searchParams) {
     Stack.livePreviewQuery(searchParams);
   }
-  let req = Stack.ContentType(contentTypeUid).Query().where("url", url);
+  const req = Stack.ContentType(contentTypeUid).Query().where("url", url);
   if (variantParam) {
     // convert the variant parameter to variant aliases
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(",");

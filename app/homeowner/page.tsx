@@ -1,8 +1,6 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
-import Personalize from "@contentstack/personalize-edge-sdk";
 import { LivePreviewQuery } from "contentstack";
-import ResetButton from "../ResetButton";
 import Attribute from "../Attribute";
 const navigation = [
   { name: "Homeowner", href: "/homeowner" },
@@ -10,9 +8,8 @@ const navigation = [
 ];
 
 export default async function Page({ searchParams }: { searchParams: any }) {
-  let waitedParams = await searchParams;
+  const waitedParams = await searchParams;
   setLivePreviewQueryParams(waitedParams);
-  let data;
   async function fetchData(searchParams: LivePreviewQuery) {
     try {
       const result = await getEntryByUrl({
@@ -25,7 +22,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
       console.error("Error fetching data:", error);
     }
   }
-  data = await fetchData(searchParams);
+  const data = await fetchData(searchParams);
 
   return (
     <div className="bg-white">

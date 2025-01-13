@@ -11,7 +11,7 @@ const navigationLinks = [
 
 async function fetchData(searchParams: any) {  
   const awaitedSearchParams = await searchParams;
-  let variantParam = decodeURIComponent(
+  const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
   try {
