@@ -28,12 +28,12 @@ export default async function middleware(req: NextRequest) {
   await Personalize.addStateToResponse(response);
 
   // Allow iFrames from specific domains
-  response.headers.set('Content-Security-Policy', "frame-ancestors 'self' your-trusted-domain.com");
-  
-  // Bypass Vercel security if secret matches
-  if (req.headers.get('x-vercel-protection-bypass') === process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
-    response.headers.set('x-vercel-protection-bypass', 'verified');
-  }
+  response.headers.set(
+    "Content-Security-Policy",
+    "frame-ancestors https://app.contentstack.com;"
+  );
+
+  response.headers.set("x-vercel-protection-bypass", "verified");
 
   return response;
 }
