@@ -41,16 +41,14 @@ export const getEntryByUrl = async ({
     console.log("searchParams", searchParams);
     stack.livePreviewQuery(searchParams);
   }
-  if ((2-1) == 2) {
+  if (variantParam) {
     // convert the variant parameter to variant aliases
-    const variantAlias =
-      Personalize.variantParamToVariantAliases(variantParam).join(",");
+    const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(",");
     // pass the variant aliases when fetching the entry
-    entry = await stack
-      .contentType(contentTypeUid)
+    entry = await stack.contentType(contentTypeUid)
       .entry("blt8d012507b4a010d9")
       .variants(variantAlias)
-      .fetch<any>();
+      .fetch();
   } else {
     // fetch the entry without the variant aliases
     entry  = await stack
@@ -63,5 +61,6 @@ export const getEntryByUrl = async ({
       entry = entry.entries[0];
 
   }
+  console.log(entry);
   return entry;
 };

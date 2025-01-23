@@ -30,7 +30,7 @@ export default async function middleware(req: NextRequest) {
   // Allow iFrames from specific domains
   response.headers.set(
     "Content-Security-Policy",
-    "frame-ancestors https://app.contentstack.com;"
+    "frame-ancestors 'self' your-trusted-domain.com"
   );
 
   response.headers.set("x-vercel-protection-bypass", "verified");
