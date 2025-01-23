@@ -1,15 +1,15 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getEntryByUrl } from "./sdk/contentstack";
 import Personalize from "@contentstack/personalize-edge-sdk";
-//import MyButton from "./button";
 import ResetButton from "./ResetButton";
+import Script from "next/script";
 
 const navigationLinks = [
   { name: "Homeowner", href: "/homeowner" },
   { name: "Home", href: "/" },
 ];
 
-async function fetchData(searchParams: any) {  
+async function fetchData(searchParams: any) {
   const awaitedSearchParams = await searchParams;
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
@@ -21,10 +21,9 @@ async function fetchData(searchParams: any) {
       searchParams: await searchParams,
       variantParam: variantParam,
     });
-    return result
+    return result;
   } catch (error) {
     console.error("Error fetching data:", error);
-    return null;
   }
 }
 
@@ -36,6 +35,20 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <>
+      <Script>
+        {`
+        !function(){"use strict";var o=window.jstag||(window.jstag={}),r=[];function n(e){o[e]=function(){for(var n=arguments.length,t=new Array(n),i=0;i<n;i++)t[i]=arguments[i];r.push([e,t])}}n("send"),n("mock"),n("identify"),n("pageView"),n("unblock"),n("getid"),n("setid"),n("loadEntity"),n("getEntity"),n("on"),n("once"),n("call"),o.loadScript=function(n,t,i){var e=document.createElement("script");e.async=!0,e.src=n,e.onload=t,e.onerror=i;var o=document.getElementsByTagName("script")[0],r=o&&o.parentNode||document.head||document.body,c=o||r.lastChild;return null!=c?r.insertBefore(e,c):r.appendChild(e),this},o.init=function n(t){return this.config=t,this.loadScript(t.src,function(){if(o.init===n)throw new Error("Load error!");o.init(o.config),function(){for(var n=0;n<r.length;n++){var t=r[n][0],i=r[n][1];o[t].apply(o,i)}r=void 0}()}),this}}();
+        jstag.init({
+          src: 'https://c.lytics.io/api/tag/fc4a28cd09a9e2cd255c41d24df993b0/latest.min.js',
+          pageAnalysis: {
+            dataLayerPull: {
+              disabled: true
+            }
+          }
+        });
+        jstag.pageView();
+      `}
+      </Script>
       <div className="bg-white">
         <header className="absolute inset-x-0 top-0 z-50">
           <nav
@@ -105,7 +118,8 @@ export default async function Page({ searchParams }: { searchParams: any }) {
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div
                 className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 
-                    ring-1 ring-gray-900/10 hover:ring-gray-900/20" {...data.$.announcement_text}
+                    ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                {...(data?.$ ? data.$.announcement_text : {})}
               >
                 {announcementText}
                 <a href="#" className="font-semibold text-indigo-600">
@@ -115,10 +129,16 @@ export default async function Page({ searchParams }: { searchParams: any }) {
               </div>
             </div>
             <div className="text-center">
-              <h1 {...data.$.banner_text} className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
+              <h1
+                {...(data?.$ ? data.$.banner_text : {})}
+                className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl"
+              >
                 {bannerText}
               </h1>
-              <p {...data.$.banner_description} className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+              <p
+                {...(data?.$ ? data.$.banner_description : {})}
+                className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8"
+              >
                 {bannerDescription}
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">

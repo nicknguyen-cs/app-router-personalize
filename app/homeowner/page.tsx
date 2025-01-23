@@ -9,6 +9,7 @@ const navigation = [
 
 export default async function Page({ searchParams }: { searchParams: any }) {
   const waitedParams = await searchParams;
+  console.log("waitedParams", waitedParams);
   setLivePreviewQueryParams(waitedParams);
   async function fetchData(searchParams: LivePreviewQuery) {
     try {

@@ -1,26 +1,27 @@
-import Contentstack, { LivePreviewQuery } from "contentstack";
-import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import contentstack, {
+  LivePreviewQuery,
+  QueryOperation,
+} from "@contentstack/delivery-sdk";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { addEditableTags } from "@contentstack/utils";
 
-export const Stack = Contentstack.Stack({
-  api_key: process.env.NEXT_PUBLIC_CS_API_KEY || "",
-  delivery_token: process.env.NEXT_PUBLIC_CS_DELIVERY_TOKEN || "",
+export const stack = contentstack.stack({
+  apiKey: process.env.NEXT_PUBLIC_CS_API_KEY || "",
+  deliveryToken: process.env.NEXT_PUBLIC_CS_DELIVERY_TOKEN || "",
   environment: process.env.NEXT_PUBLIC_CS_ENVIRONMENT || "",
   live_preview: {
-    preview_token: process.env.NEXT_PUBLIC_CS_LIVE_PREVIEW_TOKEN || "",
     enable: true,
     host: "rest-preview.contentstack.com",
+    preview_token: process.env.NEXT_PUBLIC_CS_LIVE_PREVIEW_TOKEN || "csbb8b929bbe3d0b70a54e4a1e",
   },
 });
 
-export const { onEntryChange } = ContentstackLivePreview;
-
 export const setLivePreviewQueryParams = (queryParams: any) => {
   if (queryParams?.live_preview) {
-    Stack.livePreviewQuery(queryParams);
+    stack.livePreviewQuery(queryParams);
   }
 };
+
 Personalize.setEdgeApiUrl("https://personalize-edge.contentstack.com");
 Personalize.init(process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID || "");
 
@@ -35,24 +36,32 @@ export const getEntryByUrl = async ({
   variantParam?: any;
   searchParams?: LivePreviewQuery;
 }) => {
-  let entry;
+  let entry : any;
   if (searchParams) {
-    Stack.livePreviewQuery(searchParams);
+    console.log("searchParams", searchParams);
+    stack.livePreviewQuery(searchParams);
   }
-  const req = Stack.ContentType(contentTypeUid).Query().where("url", url);
-  if (variantParam) {
+  if ((2-1) == 2) {
     // convert the variant parameter to variant aliases
-    const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(",");
+    const variantAlias =
+      Personalize.variantParamToVariantAliases(variantParam).join(",");
     // pass the variant aliases when fetching the entry
-    entry = await Stack.ContentType(contentTypeUid)
-      .Entry("blt8d012507b4a010d9")
+    entry = await stack
+      .contentType(contentTypeUid)
+      .entry("blt8d012507b4a010d9")
       .variants(variantAlias)
-      .toJSON()
-      .fetch();
+      .fetch<any>();
   } else {
     // fetch the entry without the variant aliases
-    entry = await req.toJSON().find();
+    entry  = await stack
+      .contentType(contentTypeUid)
+      .entry()
+      .query()
+      .where("url", QueryOperation.EQUALS, url)
+      .find<any>();
+      if (searchParams) addEditableTags(entry.entries[0], contentTypeUid, true, "en-us");
+      entry = entry.entries[0];
+
   }
-  if (searchParams) addEditableTags(entry, contentTypeUid, true, "en-us");
   return entry;
 };
