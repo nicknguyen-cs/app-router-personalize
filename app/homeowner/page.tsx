@@ -80,8 +80,6 @@ export default async function Page({ searchParams }: { searchParams: any }) {
         </div>
       </div>
       <Script
-        src="https://example.com/path/to/jstag.js"
-        strategy="beforeInteractive"
         id="tag"
       >
         {`jstag.send({"audience" : "homeowner"})`}
