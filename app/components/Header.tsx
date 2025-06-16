@@ -4,8 +4,8 @@ import AnnouncementBanner from "./AnnouncementBanner";
 const navigationLinks = [
   { name: "Homeowner", href: "/homeowner" },
   { name: "Renter", href: "/renter" },
-  { name: "Developer", href: "/developer" },
   { name: "Home", href: "/" },
+  { name: "Reset", href: "/reset" },
 ];
 
 export default function Header({

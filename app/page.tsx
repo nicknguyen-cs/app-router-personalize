@@ -10,7 +10,7 @@ async function fetchData(searchParams: any) {
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
-  console.log(variantParam);
+  console.log("PAGE:" , awaitedSearchParams);
   try {
     const result = await getEntryByUrl({
       url: "/",

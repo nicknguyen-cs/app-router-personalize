@@ -40,18 +40,21 @@ export const getEntryByUrl = async ({
   url: string;
   contentTypeUid: string;
   variantParam?: any;
-  searchParams?: LivePreviewQuery;
+  searchParams?: Promise<LivePreviewQuery>; // Ensure searchParams is a Promise
 }) => {
   let entry: any;
-  if (searchParams) {
-    stack.livePreviewQuery(searchParams);
+
+  const resolvedSearchParams = searchParams ? await searchParams : undefined; // Await searchParams
+
+  if (resolvedSearchParams?.live_preview) {
+    await stack.livePreviewQuery(resolvedSearchParams);
   }
   if (variantParam) {
+    console.log(variantParam)
     // convert the variant parameter to variant aliases
     const variantAlias =
       Personalize.variantParamToVariantAliases(variantParam).join(",");
     // pass the variant aliases when fetching the entry
-    console.log(variantAlias);
     entry = await stack
       .contentType(contentTypeUid)
       .entry("blt8d012507b4a010d9")
@@ -68,7 +71,7 @@ export const getEntryByUrl = async ({
       .find<any>();
     entry = entry.entries;
   }
-  if (searchParams?.live_preview) {
+  if (resolvedSearchParams?.live_preview) {
     addEditableTags(entry, contentTypeUid, true, "en-us");
   }
   return entry;
