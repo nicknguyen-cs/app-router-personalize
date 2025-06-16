@@ -6,7 +6,7 @@ import Script from "next/script";
 export default async function Page({ searchParams }: { searchParams: any }) {
   const waitedParams = await searchParams;
   setLivePreviewQueryParams(waitedParams);
-  async function fetchData(searchParams: LivePreviewQuery) {
+  async function fetchData(searchParams: Promise<LivePreviewQuery>) {
     try {
       const result = await getEntryByUrl({
         url: "/",
