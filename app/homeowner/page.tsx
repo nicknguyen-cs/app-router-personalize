@@ -79,10 +79,8 @@ export default async function Page({ searchParams }: { searchParams: any }) {
           />
         </div>
       </div>
-      <Script
-        id="tag"
-      >
-        {`jstag.send({"audience" : "homeowner"})`}
+      <Script id="tag">
+        {`jstag.send({"audience" : "homeowner" , "client_side_sending" : "THIS IS WORKING"}); console.log("Debug Statement");`}
       </Script>
     </div>
   );
