@@ -1,9 +1,6 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
 import { LivePreviewQuery } from "contentstack";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import Attribute from "../Attribute";
 const navigation = [
   { name: "Homeowner", href: "/homeowner" },
   { name: "Home", href: "/" },

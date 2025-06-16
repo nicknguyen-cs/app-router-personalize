@@ -34,4 +34,12 @@ export interface Image {
   url: string;
 }
 
-export interface ACL {}
+export interface ACL {
+  read: string[];
+  write: string[];
+  delete: string[];
+  create: string[];
+  update: string[];
+  manage: string[];
+  admin: string[];
+}

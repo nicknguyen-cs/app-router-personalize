@@ -1,4 +1,3 @@
-import { Bars3Icon } from "@heroicons/react/24/outline";
 import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
 import { LivePreviewQuery } from "contentstack";
 import Header from "../components/Header";
@@ -83,6 +82,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
       <Script
         src="https://example.com/path/to/jstag.js"
         strategy="beforeInteractive"
+        id="tag"
       >
         {`jstag.send({"audience" : "homeowner"})`}
       </Script>
