@@ -6,7 +6,11 @@ export default function Attribute() {
     const Personalize = useContext(PersonalizeContext);
 
     useEffect(() => {
-        Personalize.set({ homeowner: true });
+        async function set () {
+            await Personalize.set({ homeowner: true });
+
+        }
+        set()
     })
     return <></>
 }

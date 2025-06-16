@@ -9,16 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@contentstack/delivery-sdk": "^4.4.4",
-    "@contentstack/live-preview-utils": "^3.0.2",
-    "@contentstack/personalize-edge-sdk": "^1.0.4",
+    "@contentstack/delivery-sdk": "^4.6.0",
+    "@contentstack/live-preview-utils": "^3.1.2",
+    "@contentstack/personalize-edge-sdk": "^1.0.11",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "contentstack": "^3.23.0",
+    "@next/third-parties": "^15.1.1",
+    "contentstack": "^3.25.0",
     "next": "^15.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@next/third-parties": "^15.1.1"
+    "react-router-dom": "^7.5.1"
   },
   "devDependencies": {
     "@types/node": "^20",

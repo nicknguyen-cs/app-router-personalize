@@ -1,9 +1,13 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
 import { LivePreviewQuery } from "contentstack";
-import Header from "../components/Header";
-import Script from "next/script";
-
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Attribute from "../Attribute";
+const navigation = [
+  { name: "Homeowner", href: "/homeowner" },
+  { name: "Home", href: "/" },
+];
 export default async function Page({ searchParams }: { searchParams: any }) {
   const waitedParams = await searchParams;
   setLivePreviewQueryParams(waitedParams);
@@ -23,7 +27,46 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-white">
-      <Header announcementReference={""} />
+      {/* <Attribute /> */}
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav
+          aria-label="Global"
+          className="flex items-center justify-between p-6 lg:px-8"
+        >
+          <div className="flex lg:flex-1">
+            <a href="#" className="-m-1.5 p-1.5">
+              <span className="sr-only">Your Company</span>
+              <img
+                alt=""
+                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                className="h-8 w-auto"
+              />
+            </a>
+          </div>
+          <div className="flex lg:hidden">
+            <button
+              type="button"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon aria-hidden="true" className="size-6" />
+            </button>
+          </div>
+          <div className="hidden lg:flex lg:gap-x-12">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm/6 font-semibold text-gray-900"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+        </nav>
+      </header>
+
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           aria-hidden="true"
@@ -80,12 +123,6 @@ export default async function Page({ searchParams }: { searchParams: any }) {
           />
         </div>
       </div>
-      <Script
-        src="https://example.com/path/to/jstag.js"
-        strategy="beforeInteractive"
-      >
-        {`jstag.send({"audience" : "homeowner"})`}
-      </Script>
     </div>
   );
 }

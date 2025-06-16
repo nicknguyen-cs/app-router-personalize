@@ -1,9 +1,14 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
 import { LivePreviewQuery } from "contentstack";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Attribute from "../Attribute";
 import Header from "../components/Header";
-import Script from "next/script";
-
+const navigation = [
+  { name: "Homeowner", href: "/homeowner" },
+  { name: "Home", href: "/" },
+];
 export default async function Page({ searchParams }: { searchParams: any }) {
   const waitedParams = await searchParams;
   setLivePreviewQueryParams(waitedParams);
@@ -23,7 +28,9 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-white">
+      {/* <Attribute /> */}
       <Header announcementReference={""} />
+
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           aria-hidden="true"
@@ -80,12 +87,6 @@ export default async function Page({ searchParams }: { searchParams: any }) {
           />
         </div>
       </div>
-      <Script
-        src="https://example.com/path/to/jstag.js"
-        strategy="beforeInteractive"
-      >
-        {`jstag.send({"audience" : "homeowner"})`}
-      </Script>
     </div>
   );
 }

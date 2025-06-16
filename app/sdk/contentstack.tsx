@@ -9,10 +9,13 @@ export const stack = contentstack.stack({
   apiKey: process.env.NEXT_PUBLIC_CS_API_KEY || "",
   deliveryToken: process.env.NEXT_PUBLIC_CS_DELIVERY_TOKEN || "",
   environment: process.env.NEXT_PUBLIC_CS_ENVIRONMENT || "",
+  branch: process.env.NEXT_PUBLIC_CS_BRANCH || "main",
   live_preview: {
     enable: true,
     host: "rest-preview.contentstack.com",
-    preview_token: process.env.NEXT_PUBLIC_CS_LIVE_PREVIEW_TOKEN || "csbb8b929bbe3d0b70a54e4a1e",
+    preview_token:
+      process.env.NEXT_PUBLIC_CS_LIVE_PREVIEW_TOKEN ||
+      "csbb8b929bbe3d0b70a54e4a1e",
   },
 });
 
@@ -23,7 +26,10 @@ export const setLivePreviewQueryParams = (queryParams: any) => {
 };
 
 Personalize.setEdgeApiUrl("https://personalize-edge.contentstack.com");
-Personalize.init(process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID || "");
+Personalize.init(
+  process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID ||
+    "6734eae6603c9640f5808e78"
+);
 
 export const getEntryByUrl = async ({
   url,
@@ -36,31 +42,34 @@ export const getEntryByUrl = async ({
   variantParam?: any;
   searchParams?: LivePreviewQuery;
 }) => {
-  let entry : any;
+  let entry: any;
   if (searchParams) {
-    console.log("searchParams", searchParams);
     stack.livePreviewQuery(searchParams);
   }
   if (variantParam) {
     // convert the variant parameter to variant aliases
-    const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(",");
+    const variantAlias =
+      Personalize.variantParamToVariantAliases(variantParam).join(",");
     // pass the variant aliases when fetching the entry
-    entry = await stack.contentType(contentTypeUid)
+    console.log(variantAlias);
+    entry = await stack
+      .contentType(contentTypeUid)
       .entry("blt8d012507b4a010d9")
+      .includeReference("announcement")
       .variants(variantAlias)
       .fetch();
   } else {
-    // fetch the entry without the variant aliases
-    entry  = await stack
+    entry = await stack
       .contentType(contentTypeUid)
       .entry()
+      .includeReference("announcement")
       .query()
       .where("url", QueryOperation.EQUALS, url)
       .find<any>();
-      if (searchParams) addEditableTags(entry.entries[0], contentTypeUid, true, "en-us");
-      entry = entry.entries[0];
-
+    entry = entry.entries;
   }
-  console.log(entry);
+  if (searchParams?.live_preview) {
+    addEditableTags(entry, contentTypeUid, true, "en-us");
+  }
   return entry;
 };
