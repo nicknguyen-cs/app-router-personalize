@@ -40,7 +40,7 @@ export default function RootLayout({
   // Define config and initialize Lytics tracking tag.
   // - The setup below will disable the automatic sending of Page Analysis Information (to prevent duplicative sends, as this same information will be included in the jstag.pageView() call below, by default)
   jstag.init({
-    src: 'https://c.lytics.io/api/tag/3a8f84500fa6a26e9e99d1da16dffbcc/latest.min.js'
+    src: 'https://c.lytics.io/api/tag/3d9449e49b967beb3bbe07da819901f6/latest.min.js'
   });
   
   // You may need to send a page view, depending on your use-case
