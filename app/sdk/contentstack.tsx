@@ -50,7 +50,6 @@ export const getEntryByUrl = async ({
     await stack.livePreviewQuery(resolvedSearchParams);
   }
   if (variantParam) {
-    console.log(variantParam)
     // convert the variant parameter to variant aliases
     const variantAlias =
       Personalize.variantParamToVariantAliases(variantParam).join(",");

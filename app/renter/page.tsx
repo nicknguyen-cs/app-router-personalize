@@ -5,7 +5,6 @@ import Script from "next/script";
 
 export default async function Page({ searchParams }: { searchParams: any }) {
   const waitedParams = await searchParams;
-  console.log(waitedParams);
   setLivePreviewQueryParams(waitedParams);
   async function fetchData(searchParams: Promise<LivePreviewQuery>) {
     try {

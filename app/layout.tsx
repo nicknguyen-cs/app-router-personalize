@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import LivePreviewInitComponent from "./sdk/livepreview";
+import { PersonalizeContext } from "./context/PersonalizeContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

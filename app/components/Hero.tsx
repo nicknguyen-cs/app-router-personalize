@@ -1,21 +1,21 @@
 // components/Hero.tsx
 import { HeroType } from "../types/herotype";
 
-const Hero = ({ title, subtitle, cta, image }: HeroType) => {
+const Hero = ({ title, subtitle, image }: HeroType) => {
   return (
     <section
       className="relative bg-cover bg-center bg-no-repeat h-[50vh] flex items-center justify-center text-white overflow-hidden mt-3"
-      style={{ backgroundImage: `url(${image.url})` }}
+  
     >
       <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Overlay */}
       <div className="relative z-10 text-center px-6 max-w-3xl">
         <h1 className="text-4xl font-bold drop-shadow">{title}</h1>
         <p className="mt-4 text-lg drop-shadow">{subtitle}</p>
         <a
-          href={cta.href}
+          href={''}
           className="mt-6 inline-block bg-[#47CDFF] text-white text-sm px-5 py-2 rounded-md hover:bg-[#36bde6] transition"
         >
-          {cta.title}
+          Placeholder
         </a>
       </div>
     </section>

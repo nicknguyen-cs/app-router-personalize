@@ -13,6 +13,7 @@ export default function Banner({
   bannerDescription,
   data,
 }: BannerProps) {
+
   return (
     <main className="banner-main">
       <div className="banner-container ">
