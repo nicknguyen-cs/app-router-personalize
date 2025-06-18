@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
-  let impressionExperience = variantParam
+  const impressionExperience = variantParam
     .split(",")
     .find((str) => str.split("_")[1] !== "null");
 

@@ -1,7 +1,7 @@
 // components/Hero.tsx
 import { HeroType } from "../types/herotype";
 
-const Hero = ({ title, subtitle, image }: HeroType) => {
+const Hero = ({ title, subtitle }: HeroType) => {
   return (
     <section
       className="relative bg-cover bg-center bg-no-repeat h-[50vh] flex items-center justify-center text-white overflow-hidden mt-3"
