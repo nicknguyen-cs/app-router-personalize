@@ -8,8 +8,8 @@ export default function ImpressionTracker({ variant }: { variant: any }) {
     console.log("ImpressionTracker Loaded");
     let isMounted = true;
     getPersonalizeInstance().then((personalize) => {
-      console.log(personalize);
       if (isMounted && personalize) {
+        console.log("Triggering impression for variant:", variant);
         personalize.triggerImpression(variant); // id might be something like 'homepage_banner'
       }
     });
