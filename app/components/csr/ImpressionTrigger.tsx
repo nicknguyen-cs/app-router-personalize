@@ -1,17 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { usePersonalize } from '../context/PersonalizeContext';
+import { useEffect } from "react";
+import { getPersonalizeInstance } from "../context/PersonalizeContext";
 
-export default function ImpressionTracker({variant}: { variant: any }) {
-  const personalize = usePersonalize();
-
+export default function ImpressionTracker({ variant }: { variant: any }) {
   useEffect(() => {
-    if (personalize) {
-        console.log("setting: " , variant)
-      personalize.triggerImpression(variant); // id might be something like 'homepage_banner'
-    }
-  }, [personalize, variant]);
+    console.log("ImpressionTracker Loaded");
+    let isMounted = true;
+    getPersonalizeInstance().then((personalize) => {
+      console.log(personalize);
+      if (isMounted && personalize) {
+        personalize.triggerImpression(variant); // id might be something like 'homepage_banner'
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [variant]);
 
   return null; // this component only exists to track the impression
 }
