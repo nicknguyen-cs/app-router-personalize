@@ -1,6 +1,5 @@
 "use client";
 import { getPersonalizeInstance } from "../context/PersonalizeSDK";
-import { useEffect } from "react";
 
 export function EventTriggerREST({
   eventUID,
