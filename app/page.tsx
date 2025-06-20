@@ -5,7 +5,6 @@ import Banner from "./components/Banner";
 import Hero from "./components/Hero";
 import { Features } from "./components/FeatureBlock";
 import { ImpressionTrackerREST } from "./components/csr/ImpressionTrigger";
-import EventTrigger from "./components/csr/EventTrigger";
 
 async function fetchData(searchParams: any) {
   const awaitedSearchParams = await searchParams;
@@ -30,8 +29,22 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
-  //const variantAlias =
-    Personalize.variantParamToVariantAliases(variantParam).join(",");
+
+  // Split variantParam into individual sets and filter out "null"
+  const validVariant = variantParam
+    .split(",")
+    .find((set) => !set.includes("null"));
+
+  if (!validVariant) {
+    console.error("No valid variant found");
+    return null;
+  }
+
+  // Split the valid variant into experienceUid and variantId
+  const [experienceUid, variantId] = validVariant.split("_");
+  console.log("Experience UID:", experienceUid);
+  console.log("Variant ID:", variantId);
+
   const data = await fetchData(searchParams);
   const announcementText = data?.announcement_text || "";
   const bannerText = data?.banner_text || "";
@@ -40,11 +53,13 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-gray-50">
-      <ImpressionTrackerREST />
-      <EventTrigger />
+      <ImpressionTrackerREST
+        experienceShortUid={experienceUid}
+        variantShortUid={variantId}
+      />
       <div className="mb-2">
         {" "}
-        {/* Add spacing below 1eader */}
+        {/* Add spacing below Header */}
         <Header announcementReference={"25%"} />
       </div>
       <div className="mb-2">

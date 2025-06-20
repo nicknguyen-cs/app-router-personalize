@@ -1,8 +1,8 @@
 "use client";
+import { getPersonalizeInstance } from "../context/PersonalizeSDK";
 
 /*
 import { useEffect } from "react";
-import { getPersonalizeInstance } from "../context/PersonalizeSDK";
 
 export default function ImpressionTracker({
   variantAlias,
@@ -24,35 +24,41 @@ export default function ImpressionTracker({
 }
 */
 
-export async function ImpressionTrackerREST() {
-  const headers = new Headers();
-  const baseUid = "6c3fd942-693f-5f19-a9f7"; // Base part of the UID
-  const randomSegment = Math.random().toString(36).substring(2, 10); // Generate a random string
-  const userUid = `${baseUid}-${randomSegment}`; // Combine base UID with random segment
+export async function ImpressionTrackerREST({experienceShortUid, variantShortUid}: {experienceShortUid?: string, variantShortUid?: string}) {
+  getPersonalizeInstance().then((personalize) => {
+    if (personalize) {
+      const headers = new Headers();
+      const userUID: string = personalize.getUserId() || ""; // Base part of the UID
+      if (userUID) {
+        headers.append("x-cs-personalize-user-uid", userUID);
+        headers.append("x-project-uid", "6734eae6603c9640f5808e78");
+        headers.append("Content-Type", "application/json");
 
-  headers.append("x-cs-personalize-user-uid", userUid);
-  headers.append("x-project-uid", "6734eae6603c9640f5808e78");
-  headers.append("Content-Type", "application/json");
+        const body = JSON.stringify([
+          {
+            experienceShortUid: experienceShortUid,
+            variantShortUid: variantShortUid,
+            type: "IMPRESSION",
+          },
+        ]);
 
-  const body = JSON.stringify([
-    {
-      experienceShortUid: "8",
-      variantShortUid: "1",
-      type: "IMPRESSION",
-    },
-  ]);
+        const requestOptions: any = {
+          method: "POST",
+          headers: headers,
+          body: body,
+          redirect: "follow",
+        };
 
-  const requestOptions: any = {
-    method: "POST",
-    headers: headers,
-    body: body,
-    redirect: "follow",
-  };
-
-  fetch("https://personalize-edge.contentstack.com/events", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+        fetch(
+          "https://personalize-edge.contentstack.com/events",
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      }
+    }
+  });
 
   return null; // this function only exists to track the impression
 }
