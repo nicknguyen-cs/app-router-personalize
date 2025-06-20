@@ -5,6 +5,7 @@ import Banner from "./components/Banner";
 import Hero from "./components/Hero";
 import { Features } from "./components/FeatureBlock";
 import ImpressionTracker from "./components/csr/ImpressionTrigger";
+import EventTrigger from "./components/csr/EventTrigger";
 
 async function fetchData(searchParams: any) {
   const awaitedSearchParams = await searchParams;
@@ -40,6 +41,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   return (
     <div className="bg-gray-50">
       <ImpressionTracker variantAlias={variantAlias} />
+      <EventTrigger />
       <div className="mb-2">
         {" "}
         {/* Add spacing below 1eader */}

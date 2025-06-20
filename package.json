@@ -11,7 +11,7 @@
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.6.0",
     "@contentstack/live-preview-utils": "^3.1.2",
-    "@contentstack/personalize-edge-sdk": "^1.0.11",
+    "@contentstack/personalize-edge-sdk": "^1.0.15",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@next/third-parties": "^15.1.1",

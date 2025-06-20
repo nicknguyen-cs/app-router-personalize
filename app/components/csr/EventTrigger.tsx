@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { getPersonalizeInstance } from "../context/PersonalizeContext";
+import { getPersonalizeInstance } from "../context/PersonalizeSDK";
 
 export default function ImpressionTracker() {
   useEffect(() => {
