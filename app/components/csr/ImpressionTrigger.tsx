@@ -3,20 +3,21 @@
 import { useEffect } from "react";
 import { getPersonalizeInstance } from "../context/PersonalizeContext";
 
-export default function ImpressionTracker({ variant }: { variant: any }) {
+export default function ImpressionTracker({ variantAlias }: { variantAlias: any }) {
   useEffect(() => {
-    console.log("ImpressionTracker Loaded");
-    let isMounted = true;
+    console.log("variantAlias value:", variantAlias);
+    console.log("variantAlias type:", Array.isArray(variantAlias) ? "array" : typeof variantAlias);
+
+    // Ensure variantAlias is an array
+    const aliases = Array.isArray(variantAlias) ? variantAlias : [variantAlias];
+
     getPersonalizeInstance().then((personalize) => {
-      if (isMounted && personalize) {
-        console.log("Triggering impression for variant:", variant);
-        personalize.triggerImpression(variant); // id might be something like 'homepage_banner'
+      console.log(personalize);
+      if (personalize) {
+        personalize.triggerImpressions({ aliases : ['cs_personalize_6_null','cs_personalize_8_0'] }); // Pass the array of aliases
       }
     });
-    return () => {
-      isMounted = false;
-    };
-  }, [variant]);
+  }, [variantAlias]);
 
   return null; // this component only exists to track the impression
 }

@@ -29,10 +29,8 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
-  const impressionExperience = variantParam
-    .split(",")
-    .find((str) => str.split("_")[1] !== "null");
-
+  const variantAlias =
+    Personalize.variantParamToVariantAliases(variantParam).join(",");
   const data = await fetchData(searchParams);
   const announcementText = data?.announcement_text || "";
   const bannerText = data?.banner_text || "";
@@ -41,7 +39,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-gray-50">
-      <ImpressionTracker variant={impressionExperience} />
+      <ImpressionTracker variantAlias={variantAlias} />
       <div className="mb-2">
         {" "}
         {/* Add spacing below 1eader */}
