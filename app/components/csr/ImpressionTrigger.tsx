@@ -26,10 +26,11 @@ export default function ImpressionTracker({
 
 export async function ImpressionTrackerREST() {
   const headers = new Headers();
-  headers.append(
-    "x-cs-personalize-user-uid",
-    "12bd8cbd-4dd8-570c-a68c-9be860831941"
-  );
+  const baseUid = "6c3fd942-693f-5f19-a9f7"; // Base part of the UID
+  const randomSegment = Math.random().toString(36).substring(2, 10); // Generate a random string
+  const userUid = `${baseUid}-${randomSegment}`; // Combine base UID with random segment
+
+  headers.append("x-cs-personalize-user-uid", userUid);
   headers.append("x-project-uid", "6734eae6603c9640f5808e78");
   headers.append("Content-Type", "application/json");
 
