@@ -13,5 +13,9 @@ export default function ImpressionTracker() {
     });
   }, []);
 
-  return null; // this component only exists to track the impression
+  return (
+    <a href="#" className="action-get-started">
+      Get started
+    </a>
+  ); // this component only exists to track the impression
 }

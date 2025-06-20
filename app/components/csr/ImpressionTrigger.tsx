@@ -1,9 +1,8 @@
 "use client";
 import { getPersonalizeInstance } from "../context/PersonalizeSDK";
-
-/*
 import { useEffect } from "react";
 
+/*
 export default function ImpressionTracker({
   variantAlias,
 }: {
@@ -24,41 +23,50 @@ export default function ImpressionTracker({
 }
 */
 
-export async function ImpressionTrackerREST({experienceShortUid, variantShortUid}: {experienceShortUid?: string, variantShortUid?: string}) {
-  getPersonalizeInstance().then((personalize) => {
-    if (personalize) {
-      const headers = new Headers();
-      const userUID: string = personalize.getUserId() || ""; // Base part of the UID
-      if (userUID) {
-        headers.append("x-cs-personalize-user-uid", userUID);
-        headers.append("x-project-uid", "6734eae6603c9640f5808e78");
-        headers.append("Content-Type", "application/json");
+export function ImpressionTrackerREST({
+  experienceShortUid,
+  variantShortUid,
+}: {
+  experienceShortUid?: string;
+  variantShortUid?: string;
+}) {
+  useEffect(() => {
+    if (!experienceShortUid || !variantShortUid) return;
+    getPersonalizeInstance().then((personalize) => {
+      if (personalize) {
+        const headers = new Headers();
+        const userUID: string = personalize.getUserId() || ""; // Base part of the UID
+        if (userUID) {
+          headers.append("x-cs-personalize-user-uid", userUID);
+          headers.append("x-project-uid", "6734eae6603c9640f5808e78");
+          headers.append("Content-Type", "application/json");
 
-        const body = JSON.stringify([
-          {
-            experienceShortUid: experienceShortUid,
-            variantShortUid: variantShortUid,
-            type: "IMPRESSION",
-          },
-        ]);
+          const body = JSON.stringify([
+            {
+              experienceShortUid: experienceShortUid,
+              variantShortUid: variantShortUid,
+              type: "IMPRESSION",
+            },
+          ]);
 
-        const requestOptions: any = {
-          method: "POST",
-          headers: headers,
-          body: body,
-          redirect: "follow",
-        };
+          const requestOptions: any = {
+            method: "POST",
+            headers: headers,
+            body: body,
+            redirect: "follow",
+          };
 
-        fetch(
-          "https://personalize-edge.contentstack.com/events",
-          requestOptions
-        )
-          .then((response) => response.text())
-          .then((result) => console.log(result))
-          .catch((error) => console.error(error));
+          fetch(
+            "https://personalize-edge.contentstack.com/events",
+            requestOptions
+          )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+        }
       }
-    }
-  });
+    });
+  }, [experienceShortUid, variantShortUid]);
 
-  return null; // this function only exists to track the impression
+  return <></>; // this function only exists to track the impression
 }

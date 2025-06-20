@@ -1,3 +1,4 @@
+"use client";
 import "./Banner.css";
 
 interface BannerProps {
@@ -13,7 +14,6 @@ export default function Banner({
   bannerDescription,
   data,
 }: BannerProps) {
-
   return (
     <main className="banner-main">
       <div className="banner-container ">
