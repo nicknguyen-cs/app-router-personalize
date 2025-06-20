@@ -44,6 +44,18 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const [experienceUid, variantId] = validVariant.split("_");
   console.log("Experience UID:", experienceUid);
   console.log("Variant ID:", variantId);
+  let eventGroup: string = "";
+  switch (variantId) {
+    case "0":
+      eventGroup = "Convert User Group A";
+      break;
+    case "1":
+      eventGroup = "Convert User Group B";
+      break;
+    case "2":
+      eventGroup = "Convert User Group C";
+      break;
+  }
 
   const data = await fetchData(searchParams);
   const announcementText = data?.announcement_text || "";
@@ -70,6 +82,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
           bannerText={bannerText}
           bannerDescription={bannerDescription}
           data={data}
+          eventGroup={eventGroup}
         />
       </div>
       <main>

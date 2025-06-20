@@ -1,11 +1,12 @@
 "use client";
 import "./Banner.css";
-
+import { EventTriggerREST } from "./csr/EventTrigger";
 interface BannerProps {
   announcementText: string;
   bannerText: string;
   bannerDescription: string;
   data: any;
+  eventGroup: string
 }
 
 export default function Banner({
@@ -13,6 +14,7 @@ export default function Banner({
   bannerText,
   bannerDescription,
   data,
+  eventGroup
 }: BannerProps) {
   return (
     <main className="banner-main">
@@ -38,11 +40,9 @@ export default function Banner({
           {bannerDescription}
         </p>
         <div className="banner-actions">
-          <a href="#" className="action-get-started">
-            Get started
-          </a>
+          <EventTriggerREST eventUID={eventGroup} buttonTitle="Conversion" />
           <a href="#" className="action-learn-more">
-            Learn more <span aria-hidden="true">→</span>
+            Placeholder <span aria-hidden="true">→</span>
           </a>
         </div>
       </div>
