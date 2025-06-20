@@ -9,7 +9,7 @@ export default function ImpressionTracker({ variantAlias }: { variantAlias: any 
     console.log("variantAlias type:", Array.isArray(variantAlias) ? "array" : typeof variantAlias);
 
     // Ensure variantAlias is an array
-    const aliases = Array.isArray(variantAlias) ? variantAlias : [variantAlias];
+    //const aliases = Array.isArray(variantAlias) ? variantAlias : [variantAlias];
 
     getPersonalizeInstance().then((personalize) => {
       console.log(personalize);
