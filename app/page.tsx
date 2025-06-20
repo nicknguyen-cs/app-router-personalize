@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Banner from "./components/Banner";
 import Hero from "./components/Hero";
 import { Features } from "./components/FeatureBlock";
-import ImpressionTracker from "./components/csr/ImpressionTrigger";
+import { ImpressionTrackerREST } from "./components/csr/ImpressionTrigger";
 import EventTrigger from "./components/csr/EventTrigger";
 
 async function fetchData(searchParams: any) {
@@ -30,7 +30,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const variantParam = decodeURIComponent(
     awaitedSearchParams[Personalize.VARIANT_QUERY_PARAM]
   );
-  const variantAlias =
+  //const variantAlias =
     Personalize.variantParamToVariantAliases(variantParam).join(",");
   const data = await fetchData(searchParams);
   const announcementText = data?.announcement_text || "";
@@ -40,7 +40,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-gray-50">
-      <ImpressionTracker variantAlias={variantAlias} />
+      <ImpressionTrackerREST />
       <EventTrigger />
       <div className="mb-2">
         {" "}

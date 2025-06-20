@@ -6,9 +6,9 @@ import { getPersonalizeInstance } from "../context/PersonalizeSDK";
 export default function ImpressionTracker() {
   useEffect(() => {
     getPersonalizeInstance().then((personalize) => {
-      console.log(personalize);
       if (personalize) {
-        personalize.triggerEvent("Convert User Group A"); // id might be something like 'homepage_banner'
+        console.log("SDK Init: ", personalize);
+        //personalize.triggerEvent("Convert User Group A"); // id might be something like 'homepage_banner'
       }
     });
   }, []);

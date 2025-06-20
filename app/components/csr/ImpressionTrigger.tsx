@@ -1,5 +1,6 @@
 "use client";
 
+/*
 import { useEffect } from "react";
 import { getPersonalizeInstance } from "../context/PersonalizeSDK";
 
@@ -9,20 +10,11 @@ export default function ImpressionTracker({
   variantAlias: any;
 }) {
   useEffect(() => {
-    console.log("variantAlias value:", variantAlias);
-    console.log(
-      "variantAlias type:",
-      Array.isArray(variantAlias) ? "array" : typeof variantAlias
-    );
-
-    // Ensure variantAlias is an array
-    //const aliases = Array.isArray(variantAlias) ? variantAlias : [variantAlias];
-
     getPersonalizeInstance().then((personalize) => {
-      console.log(personalize);
+      console.log("sdk init: ", personalize);
       if (personalize) {
         personalize.triggerImpressions({
-          aliases: ["cs_personalize_6_null", "cs_personalize_8_0"],
+          aliases: ["cs_personalize_8_1"],
         }); // Pass the array of aliases
       }
     });
@@ -30,15 +22,9 @@ export default function ImpressionTracker({
 
   return null; // this component only exists to track the impression
 }
+*/
 
-/*
-export async function ImpressionTrackerREST({
-  experienceUID,
-  variantUID,
-}: {
-  experienceUID: string;
-  variantUID: string;
-}) {
+export async function ImpressionTrackerREST() {
   const headers = new Headers();
   headers.append(
     "x-cs-personalize-user-uid",
@@ -69,4 +55,3 @@ export async function ImpressionTrackerREST({
 
   return null; // this function only exists to track the impression
 }
-*/
