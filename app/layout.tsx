@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import LivePreviewInitComponent from "./sdk/LivePreview";
+import LivePreviewInitComponent from "./sdk/LivePreviewSDK";
 import LyticsTracking from "./sdk/LyticsTracker";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: "CS Sandbox",
