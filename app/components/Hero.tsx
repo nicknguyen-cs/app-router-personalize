@@ -1,25 +1,57 @@
-// components/Hero.tsx
-import { HeroType } from "../types/herotype";
+"use client";
 
-const Hero = ({ title, subtitle }: HeroType) => {
+import { motion } from "framer-motion";
+import { EventTriggerButton } from "./personalize/helpers/EventTriggerSDK";
+import { EventTriggerRestButton } from "./personalize/helpers/EventTriggerREST";
+import type { Hero } from "@/types/herotype";
+
+export default function HeroSection({ hero_title, hero_description, event_uid, $ }: Hero) {
   return (
-    <section
-      className="relative bg-cover bg-center bg-no-repeat h-[50vh] flex items-center justify-center text-white overflow-hidden mt-3"
-  
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Overlay */}
-      <div className="relative z-10 text-center px-6 max-w-3xl">
-        <h1 className="text-4xl font-bold drop-shadow">{title}</h1>
-        <p className="mt-4 text-lg drop-shadow">{subtitle}</p>
-        <a
-          href={''}
-          className="mt-6 inline-block bg-[#47CDFF] text-white text-sm px-5 py-2 rounded-md hover:bg-[#36bde6] transition"
+    <section className="relative bg-gradient-to-br from-zinc-900 via-black to-zinc-800 text-white py-24 px-6 sm:px-12 lg:px-24 shadow-inner">
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-4xl sm:text-5xl font-bold tracking-tight mb-6"
         >
-          Placeholder
-        </a>
+          {hero_title}
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-gray-300 mb-8"
+          {...($?.hero_description ? $?.hero_description : "")}
+        >
+          {hero_description}
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex justify-center gap-4"
+        >
+          <EventTriggerButton
+            eventUID={event_uid}
+            className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition"
+          >
+            Track Impression (SDK) →
+          </EventTriggerButton>
+          <EventTriggerRestButton
+            eventUID={event_uid}
+            className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition"
+          >
+            Track Impression (REST) →
+          </EventTriggerRestButton>
+          <a
+            href="#docs"
+            className="inline-block border border-white/20 hover:border-white text-white font-medium py-3 px-6 rounded-xl transition"
+          >
+            View Docs →
+          </a>
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

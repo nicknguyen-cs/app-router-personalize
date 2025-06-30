@@ -1,4 +1,4 @@
-import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/contentstack";
+import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/Contentstack";
 import { LivePreviewQuery } from "contentstack";
 import Header from "../components/Header";
 import Script from "next/script";
@@ -11,7 +11,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
       const result = await getEntryByUrl({
         url: "/",
         contentTypeUid: "page",
-        searchParams
+        searchParams,
       });
       return result[0];
     } catch (error) {
@@ -22,7 +22,7 @@ export default async function Page({ searchParams }: { searchParams: any }) {
 
   return (
     <div className="bg-white">
-      <Header announcementReference={""} />
+      <Header />
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">

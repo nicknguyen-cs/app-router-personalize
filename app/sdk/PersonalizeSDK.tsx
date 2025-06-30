@@ -8,7 +8,7 @@ let personalizeSDK: Sdk | null = null;
 export async function getPersonalizeInstance() {
   if (!Personalize.getInitializationStatus()) {
     Personalize.setEdgeApiUrl("https://personalize-edge.contentstack.com");
-    personalizeSDK = await Personalize.init(process.env.PERSONALIZE_PROJECT_UID || "");
+    personalizeSDK = await Personalize.init(process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID || "");
   }
   return personalizeSDK;
 }

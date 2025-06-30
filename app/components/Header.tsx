@@ -1,5 +1,5 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import AnnouncementBanner from "./AnnouncementBanner";
+import Link from "next/link";
 
 const navigationLinks = [
   { name: "Homeowner", href: "/homeowner" },
@@ -8,52 +8,44 @@ const navigationLinks = [
   { name: "Reset", href: "/reset" },
 ];
 
-export default function Header({
-  announcementReference,
-}: {
-  announcementReference: any;
-}) {
+export default function Header() {
   return (
-    <>
-      <header className=" inset-x-0 top-0 z-50">
-        <nav
-          aria-label="Global"
-          className="flex items-center justify-between p-6 lg:px-8"
-        >
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
-          </div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+    <header className="bg-white text-white shadow-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/contentstack.svg"
+              alt="Logo"
+            />
+          </Link>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="hidden lg:flex gap-x-8">
+          {navigationLinks.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm font-medium text-black hover:text-indigo-400 transition"
             >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="size-6" />
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            {navigationLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-sm/6 font-semibold text-gray-900"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+              {item.name}
+            </Link>
+          ))}
         </nav>
-        <AnnouncementBanner announcementReference={announcementReference} />
-      </header>
-    </>
+
+        {/* Mobile Menu Trigger */}
+        <div className="lg:hidden">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center p-2 rounded-md hover:bg-white/10 focus:outline-none"
+          >
+            <span className="sr-only">Open main menu</span>
+            <Bars3Icon className="h-6 w-6 text-white" />
+          </button>
+        </div>
+      </div>
+    </header>
   );
 }
