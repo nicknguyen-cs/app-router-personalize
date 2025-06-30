@@ -14,6 +14,7 @@ export default function HeroSection({ hero_title, hero_description, event_uid, $
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="text-4xl sm:text-5xl font-bold tracking-tight mb-6"
+          {...($?.hero_title ? $?.hero_title : "")}
         >
           {hero_title}
         </motion.h2>
