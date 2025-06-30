@@ -1,4 +1,4 @@
-import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/Contentstack";
+import { setLivePreviewQueryParams, getEntryByUrl } from "../sdk/ContentstackSDK";
 import { LivePreviewQuery } from "contentstack";
 import Header from "../components/Header";
 import Script from "next/script";

@@ -1,4 +1,4 @@
-import { getEntryByUrl } from "./sdk/Contentstack";
+import { getEntryByUrl } from "./sdk/ContentstackSDK";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import Header from "./components/Header";
 import Features from "./components/Features";
