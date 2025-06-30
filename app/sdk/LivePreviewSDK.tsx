@@ -6,8 +6,8 @@ export default function LivePreviewInitComponent() {
   useEffect(() => {
       ContentstackLivePreview.init({
         stackDetails: {
-          apiKey: process.env.NEXT_PUBLIC_CS_API_KEY || "blt63d4ae319e4ee4e7",
-          environment: "production",
+          apiKey: process.env.NEXT_PUBLIC_CS_API_KEY || "",
+          environment: process.env.NEXT_PUBLIC_CS_ENVIRONMENT || "",
         },
         mode: "builder",
         ssr: true
