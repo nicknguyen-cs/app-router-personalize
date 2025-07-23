@@ -1,10 +1,11 @@
 "use client";
-import { getPersonalizeInstance } from "../../../sdk/PersonalizeSDK";
-import { getRandomUUID } from "../utils/PersonalizeUtils";
+import { getPersonalizeInstance } from "../../sdk/PersonalizeSDK";
+import { getRandomUUID } from "../../utils/PersonalizeUtils";
 import { useEffect } from "react";
 
 export default function ImpressionTracker({ variantAlias }: { variantAlias: any }) {
 	useEffect(() => {
+		console.log("Impression being set using the SDK: " + variantAlias);
 		getPersonalizeInstance().then(async (personalize) => {
 			if (personalize) {
 				const result = variantAlias.split(",");

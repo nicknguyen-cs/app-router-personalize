@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { getPersonalizeInstance } from "../../../sdk/PersonalizeSDK";
-import { getRandomUUID } from "../utils/PersonalizeUtils";
+import { getPersonalizeInstance } from "../../sdk/PersonalizeSDK";
+import { getRandomUUID } from "../../utils/PersonalizeUtils";
 
 interface EventTriggerRestButtonProps {
   eventUID: string;
@@ -38,7 +38,7 @@ export function EventTriggerRestButton({
           method: "POST",
           headers: {
             "x-cs-personalize-user-uid": userId,
-            "x-project-uid": "6734eae6603c9640f5808e78",
+            "x-project-uid": process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID || "",
             "Content-Type": "application/json",
           },
           body: JSON.stringify([{ eventKey: eventUID, type: "EVENT" }]),

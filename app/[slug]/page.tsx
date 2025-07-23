@@ -1,11 +1,10 @@
-import { getEntryByUrl } from "./sdk/ContentstackSDK";
+import { getEntryByUrl } from "../sdk/ContentstackSDK";
 import Personalize from "@contentstack/personalize-edge-sdk";
-import Header from "./components/Header";
-import Features from "./components/Features";
-import ImpressionTrackerSDK from "./components/personalize/ImpresionTriggerSDK";
-import AnnouncementBanner from "./components/AnnouncementBanner";
-import Hero from "./components/Hero";
-import ImpressionTrackerREST from "./components/personalize/ImpressionTriggerREST";
+import Header from "../components/Header";
+import Features from "../components/Features";
+import ImpressionTrackerSDK from "../components/personalize/ImpresionTriggerSDK";
+import AnnouncementBanner from "../components/AnnouncementBanner";
+import Hero from "../components/Hero";
 
 async function fetchData(searchParams: any, url: string) {
 	const variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
@@ -35,19 +34,9 @@ export default async function Page({
 	const modularBlocks = data?.modular_blocks || [];
 	const variantParamStrings =
 		Personalize.variantParamToVariantAliases(variantParam).join(",");
-	const useSDK = process.env.NEXT_PUBLIC_USE_SDK === "true";
-	let variantString = variantParam.split(",").find((str) => str.split("_")[1] !== "null");
-	let variantExperience = variantString?.split("_") || [];
 	return (
 		<div className="bg-gray-50">
-			{useSDK ? (
-				<ImpressionTrackerSDK variantAlias={variantParamStrings} />
-			) : (
-				<ImpressionTrackerREST
-					experienceShortUid={variantExperience[0]}
-					variantShortUid={variantExperience[1]}
-				/>
-			)}
+			<ImpressionTrackerSDK variantAlias={variantParamStrings} />
 			<div>
 				<Header />
 				<AnnouncementBanner

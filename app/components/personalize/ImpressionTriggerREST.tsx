@@ -1,6 +1,6 @@
 "use client";
-import { getPersonalizeInstance } from "../../../sdk/PersonalizeSDK";
-import { getRandomUUID } from "../utils/PersonalizeUtils";
+import { getPersonalizeInstance } from "../../sdk/PersonalizeSDK";
+import { getRandomUUID } from "../../utils/PersonalizeUtils";
 import { useEffect } from "react";
 
 export default function ImpressionTrackerREST({
@@ -11,6 +11,7 @@ export default function ImpressionTrackerREST({
 	variantShortUid?: string;
 }) {
 	useEffect(() => {
+		console.log("Impression being set using the REST API: " + experienceShortUid + "_" + variantShortUid);
 		if (!experienceShortUid || !variantShortUid) return;
 		getPersonalizeInstance().then((personalize) => {
 			if (personalize) {
@@ -25,7 +26,6 @@ export default function ImpressionTrackerREST({
 					const requestOptions = getRequestOptions(headers, body);
 					fetch(url, requestOptions)
 						.then((response) => response.text())
-						.then((result) => console.log(result))
 						.catch((error) => console.error(error));
 				}
 			}
@@ -58,7 +58,7 @@ function getBody(experienceShortUid: string, variantShortUid: string) {
 function getHeaders(userUID: string) {
 	const headers = new Headers();
 	headers.append("x-cs-personalize-user-uid", userUID);
-	headers.append("x-project-uid", "6734eae6603c9640f5808e78");
+	headers.append("x-project-uid", process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID || "");
 	headers.append("Content-Type", "application/json");
 	return headers;
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback } from "react";
-import { getPersonalizeInstance } from "../../../sdk/PersonalizeSDK";
-import { getRandomUUID } from "../utils/PersonalizeUtils";
+import { getPersonalizeInstance } from "../../sdk/PersonalizeSDK";
+import { getRandomUUID } from "../../utils/PersonalizeUtils";
 
 interface EventTriggerButtonProps {
 	eventUID: string;
 	children: React.ReactNode;
-	as?: "button" | "a";
+	domType?: "button" | "a";
 	className?: string;
 	onSuccess?: () => void;
 	onError?: (error: Error) => void;
@@ -17,7 +17,7 @@ interface EventTriggerButtonProps {
 export function EventTriggerButton({
 	eventUID,
 	children,
-	as = "button",
+	domType: as = "button",
 	className = "",
 	onSuccess,
 	onError,

@@ -2,10 +2,9 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const navigationLinks = [
-  { name: "Homeowner", href: "/homeowner" },
-  { name: "Renter", href: "/renter" },
   { name: "Home", href: "/" },
-  { name: "Reset", href: "/reset" },
+  { name: "Commuity", href: "/community-page" },
+  { name: "Support", href: "/support-resources" },
 ];
 
 export default function Header() {

@@ -1,9 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { EventTriggerButton } from "./personalize/helpers/EventTriggerSDK";
-import { EventTriggerRestButton } from "./personalize/helpers/EventTriggerREST";
+import { EventTriggerButton } from "./personalize/EventTriggerSDK";
+import { EventTriggerRestButton } from "./personalize/EventTriggerREST";
 import type { Hero } from "@/types/herotype";
+
+// Extend the Window interface to include 'jstag'
+declare global {
+  interface Window {
+    jstag?: {
+      send?: (data: any) => void;
+      [key: string]: any;
+    };
+  }
+}
 
 export default function HeroSection({ hero_title, hero_description, event_uid, $ }: Hero) {
   return (
@@ -46,10 +56,16 @@ export default function HeroSection({ hero_title, hero_description, event_uid, $
             Track Impression (REST) →
           </EventTriggerRestButton>
           <a
-            href="#docs"
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.jstag?.send === "function") {
+                window?.jstag.send({
+                  audience: "member"
+                });
+              }
+            }}
             className="inline-block border border-white/20 hover:border-white text-white font-medium py-3 px-6 rounded-xl transition"
           >
-            View Docs →
+            Join Today →
           </a>
         </motion.div>
       </div>
