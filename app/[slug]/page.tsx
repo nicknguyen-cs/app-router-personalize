@@ -25,11 +25,11 @@ export default async function Page({
 	searchParams,
 	params,
 }: {
-	searchParams: Record<string, string>;
+	searchParams: any;
 	params: any;
 }) {
 	const url = params?.slug ? `/${params.slug}` : "/";
-	let variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
+	const variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
 	const data = await fetchData(searchParams, url);
 	const modularBlocks = data?.modular_blocks || [];
 	const variantParamStrings =

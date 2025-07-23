@@ -26,18 +26,18 @@ export default async function Page({
 	searchParams,
 	params,
 }: {
-	searchParams: Record<string, string>;
+	searchParams: any;
 	params: any;
 }) {
 	const url = params?.slug ? `/${params.slug}` : "/";
-	let variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
+	const variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
 	const data = await fetchData(searchParams, url);
 	const modularBlocks = data?.modular_blocks || [];
 	const variantParamStrings =
 		Personalize.variantParamToVariantAliases(variantParam).join(",");
 	const useSDK = process.env.NEXT_PUBLIC_USE_SDK === "true";
-	let variantString = variantParam.split(",").find((str) => str.split("_")[1] !== "null");
-	let variantExperience = variantString?.split("_") || [];
+	const variantString = variantParam.split(",").find((str) => str.split("_")[1] !== "null");
+	const variantExperience = variantString?.split("_") || [];
 	return (
 		<div className="bg-gray-50">
 			{useSDK ? (

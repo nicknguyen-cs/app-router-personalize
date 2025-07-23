@@ -1,4 +1,4 @@
-import contentstack, { LivePreviewQuery, QueryOperation } from "@contentstack/delivery-sdk";
+import contentstack, { QueryOperation } from "@contentstack/delivery-sdk";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { addEditableTags } from "@contentstack/utils";
 
