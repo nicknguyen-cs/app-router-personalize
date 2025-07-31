@@ -2,26 +2,43 @@ import { getEntryByUrl } from "./sdk/ContentstackSDK";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import Header from "./components/Header";
 import Features from "./components/Features";
-import ImpressionTrackerSDK from "./components/personalize/ImpresionTriggerSDK";
 import AnnouncementBanner from "./components/AnnouncementBanner";
 import Hero from "./components/Hero";
-import ImpressionTrackerREST from "./components/personalize/ImpressionTriggerREST";
+import ImpressionTriggerREST from "./components/personalize/ImpressionTriggerREST";
+import ImpressionTriggerSDK from "./components/personalize/ImpressionTriggerSDK";
 
-async function fetchData(searchParams: any, url: string) {
-	const variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
+interface FetchDataParams {
+	searchParams: any;
+	url: string;
+}
+
+/**
+ * Fetch data for the page using Contentstack SDK and Personalize SDK.
+ */
+async function fetchData({ searchParams, url }: FetchDataParams) {
+	const resolvedSearchParams = await searchParams;
+	const variantParam = decodeURIComponent(
+		resolvedSearchParams[Personalize.VARIANT_QUERY_PARAM]
+	);
+
 	try {
 		const result = await getEntryByUrl({
-			url: url,
+			url,
 			contentTypeUid: "page",
-			searchParams: await searchParams,
-			variantParam: variantParam,
+			searchParams: resolvedSearchParams,
+			variantParam,
 		});
 		return result;
 	} catch (error) {
 		console.error("Error fetching data:", error);
+		return null;
 	}
 }
 
+/**
+ * Page Component
+ * This component renders the page content, including modular blocks and impression tracking.
+ */
 export default async function Page({
 	searchParams,
 	params,
@@ -29,25 +46,35 @@ export default async function Page({
 	searchParams: any;
 	params: any;
 }) {
-	const url = params?.slug ? `/${params.slug}` : "/";
-	const variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
-	const data = await fetchData(searchParams, url);
+	const resolvedSearchParams = await searchParams;
+	const resolvedParams = await params;
+	const url = resolvedParams?.slug ? `/${resolvedParams.slug}` : "/";
+	const variantParam = decodeURIComponent(
+		resolvedSearchParams[Personalize.VARIANT_QUERY_PARAM]
+	);
+
+	const data = await fetchData({ searchParams: resolvedSearchParams, url });
 	const modularBlocks = data?.modular_blocks || [];
+
 	const variantParamStrings =
 		Personalize.variantParamToVariantAliases(variantParam).join(",");
 	const useSDK = process.env.NEXT_PUBLIC_USE_SDK === "true";
 	const variantString = variantParam.split(",").find((str) => str.split("_")[1] !== "null");
 	const variantExperience = variantString?.split("_") || [];
+
 	return (
 		<div className="bg-gray-50">
+			{/* Impression Tracker */}
 			{useSDK ? (
-				<ImpressionTrackerSDK variantAlias={variantParamStrings} />
+				<ImpressionTriggerSDK variantAlias={variantParamStrings} />
 			) : (
-				<ImpressionTrackerREST
+				<ImpressionTriggerREST
 					experienceShortUid={variantExperience[0]}
 					variantShortUid={variantExperience[1]}
 				/>
 			)}
+
+			{/* Header and Announcement Banner */}
 			<div>
 				<Header />
 				<AnnouncementBanner
@@ -56,19 +83,29 @@ export default async function Page({
 					}}
 				/>
 			</div>
+
+			{/* Main Content */}
 			<main>
 				{modularBlocks.map((block: any, index: number) => {
 					const blockType = Object.keys(block)[0];
-					switch (blockType) {
-						case "hero":
-							return <Hero key={index} {...block.hero} event_uid={"Conversion"} />;
-						case "features":
-							return <Features key={index} {...block.features} />;
-						default:
-							return null;
-					}
+					return renderBlock(blockType, block, index);
 				})}
 			</main>
 		</div>
 	);
+}
+
+/**
+ * Render modular blocks dynamically based on their type.
+ */
+function renderBlock(blockType: string, block: any, index: number) {
+	switch (blockType) {
+		case "hero":
+			return <Hero key={index} {...block.hero} event_uid={"Conversion"} />;
+		case "features":
+			return <Features key={index} {...block.features} />;
+		default:
+			console.warn(`Unknown block type: ${blockType}`);
+			return null;
+	}
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { EventTriggerButton } from "./personalize/EventTriggerSDK";
+import { EventTriggerSDKButton } from "./personalize/EventTriggerSDK";
 import { EventTriggerRestButton } from "./personalize/EventTriggerREST";
 import type { Hero } from "@/types/herotype";
 
@@ -43,12 +43,12 @@ export default function HeroSection({ hero_title, hero_description, event_uid, $
           transition={{ delay: 0.3 }}
           className="flex justify-center gap-4"
         >
-          <EventTriggerButton
+          <EventTriggerSDKButton
             eventUID={event_uid}
             className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition"
           >
             Track Impression (SDK) →
-          </EventTriggerButton>
+          </EventTriggerSDKButton>
           <EventTriggerRestButton
             eventUID={event_uid}
             className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition"
